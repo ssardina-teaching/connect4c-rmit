@@ -25,6 +25,7 @@
 #include <ctype.h>
 #include "c4.h"
 
+
 #define BUFFER_SIZE 80
 
 enum {HUMAN = 0, COMPUTER = 1};
@@ -165,25 +166,32 @@ main(int argc, char **argv)
     c4_new_game(width, height, num_to_connect, agents);    
     c4_poll(print_dot, CLOCKS_PER_SEC/2);
 
+    double time_taken;
+    clock_t t;
     do {
         print_board(width, height);
         if (agents[turn] == NULL) {  /* Human */
             do 
             {
-               sprintf(buffer, "Player %c, drop in which column",
-                            piece[turn]);
+               sprintf(buffer, "Player %c, drop in which column", piece[turn]);
                move = get_num(buffer, 1, width, -1) - 1;
             }
             while (!c4_make_move(turn, move, NULL));
         }
         else {
+            t = clock();
+
             printf("Player %c (%s) is thinking.", piece[turn], agents[turn]->name);
             fflush(stdout);
             c4_auto_move(turn, level, &move, NULL);
-                
-            printf("\n\nPlayer %c (%s) dropped its piece into column %d.\n",
-                   piece[turn], agents[turn]->name, move+1);
             
+            t = clock() - t;
+            time_taken = ((double)t)/CLOCKS_PER_SEC; /* in seconds */
+
+            printf("\n\nPlayer %c (%s) dropped its piece into column %d (took %f seconds).\n",
+                          piece[turn], agents[turn]->name, move+1, time_taken);
+
+
             if (agents[0] != NULL && agents[1] != NULL && !fastMode)
                sleep(2);
         }
