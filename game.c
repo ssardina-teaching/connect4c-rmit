@@ -47,36 +47,69 @@ main(int argc, char **argv)
     Agent **available_agents = get_agents();
     Agent *agents[2];
     int count;
-    int fastMode = FALSE;
     
-    if ((argc == 2 || argc == 4) && strcmp(argv[argc - 1], "--fast") == 0)
-    {
-       fastMode = TRUE;
-       argc--;
-    }
+    /* set default values - may be overwritten by command line options */
+     int fastMode = FALSE;
+     width = 7; /* get_num("Width of board", 1, 40, 7); */
+     height = 6; /* get_num("Height of board", 1, 40, 6); */
+     num_to_connect = 4; /* get_num("Number to connect", 1, 40, 4); */
+     level = 3; /* get_num("Search depth of AI agents, 1, 10, 3); */
+
+
+ 	/* process command line options */
+ 	int i;
+ 	int no_options = 0;
+ 	for (i = 0; i < argc; i++) {
+ 	        if (strcmp(argv[i],"--fast")==0) {
+ 	            fastMode = TRUE;
+ 	            no_options++;
+ 	        }
+ 	        else if (strcmp(argv[i],"--width")==0) {
+ 	        	width = atoi(argv[i+1]);
+ 	        	no_options++;
+ 	        	no_options++;
+ 	        }
+ 	        else if (strcmp(argv[i],"--height")==0) {
+ 	        	height = atoi(argv[i+1]);
+ 	        	no_options++;
+ 	        	no_options++;
+ 	        }
+ 	        else if (strcmp(argv[i],"--level")==0) {
+ 	        	level= atoi(argv[i+1]);
+ 	        	no_options++;
+ 	        	no_options++;
+ 	        }
+ 	        else if (strcmp(argv[i],"--help")==0) {
+ 	            printf("Connect 4 game player - Revision Sebastian Sardina 2015\n\n");
+ 	            printf("Usage: %s [agent1 agent2] [options]\n", argv[0]);
+ 	            printf("\tagent1 and agent2 are the names of the agents you wish to play.\n");
+ 	            printf("\toptions are:\n");
+ 	            printf("\t\t --help:  this printout.\n");
+ 	            printf("\t\t --width n: width of the board.\n");
+ 	            printf("\t\t --height n:  height of the board.\n");
+ 	            printf("\t\t --level n:  depth level for depth-minimax.\n");
+ 	            printf("\t\t --fast disables the delay between computer moves, making the game much faster.\n");
+
+
+ 	            printf("\n\nAvailable agents: human");
+ 	            for (count = 0; count < num_agents; count++)
+ 	               printf(", %s", available_agents[count]->name);
+
+ 	            printf("\n");
+
+ 	            exit(0);
+ 	        }
+ 	}
+
+ 	/* forget about all command line --options */
+     argc = argc - no_options;
   
     printf("\n****  Welcome to the game of Connect!  ****\n\n");
  
-    width = 7; /* get_num("Width of board", 1, 40, 7); */
-    height = 6; /* get_num("Height of board", 1, 40, 6); */
-    num_to_connect = 4; /* get_num("Number to connect", 1, 40, 4); */
-    level = 3; /* get_num("Search depth of AI agents, 1, 10, 3); */
 
-    if (argc != 1 && argc != 3)
-    {
-       printf("Usage: %s [agent1 agent2] [--fast]\n", argv[0]);
-       printf("   agent1 and agent2 are the names of the agents you wish to play.\n");
-       printf("   --fast disables the delay between computer moves, making the game much faster.\n\n");
-       printf("Available agents: human");
-       for (count = 0; count < num_agents; count++)
-          printf(", %s", available_agents[count]->name);
 
-       printf("\n");   
 
-       exit(EXIT_FAILURE);
-    }
-
-    if (argc == 3)
+    if (argc > 1)
     {
         agents[0] = NULL;
         agents[1] = NULL;
