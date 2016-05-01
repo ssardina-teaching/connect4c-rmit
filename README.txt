@@ -2,8 +2,12 @@
 Connect 4 game - Sebastian Sardina version (ssardina@gmail.com)
 
 This version has been produced by Sebastian Sardina in Semester 1, 2016. 
-It is based on previous version, but has a few improvements, including
-new scripts to test systems.
+
+It is based on previous version, but has a few improvements, including:
+
+- Better handling of the seed to make games truly different
+- New options to change size of board
+- Timing and printing of each player move
 ##############################################################################
 
 Once you unzip your c4-c package you can compile it and run it right away:
