@@ -11,6 +11,8 @@ Once you unzip your c4-c package you can compile it and run it right away:
 $ make
 $ ./c4
 
+This will run it interactively.
+
 You will see when you did the make that only 2 agent players have been found:
 
  * Found agent 'random'
@@ -19,6 +21,21 @@ You will see when you did the make that only 2 agent players have been found:
 Hence, when you run it you will be able to select just 3 type of
 players: random, simple, or human.
 
+You can run it with the agents specified:
+
+$ ./c4 simple random
+
+Options are:
+		 --help:  this printout.
+		 --width n: width of the board.
+		 --height n:  height of the board.
+		 --level n:  depth level for depth-minimax.
+		 --fast disables the delay between computer moves, making the game much faster.
+
+
+=======================
+MEDIUM PLAYER
+=======================
 
 A medium-level player is provided in binary code that you can compile
 as well. Depending on the architecture, you need to use one of the
@@ -46,7 +63,9 @@ player "medium". For example:
 
 ./c4 <your agent> medium
 
-You can also run ./c4 interactively
+
+
+
 
 
 ##############################################################################

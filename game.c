@@ -81,7 +81,7 @@ main(int argc, char **argv)
  	        	no_options++;
  	        }
  	        else if (strcmp(argv[i],"--help")==0) {
- 	            printf("Connect 4 game player - Revision Sebastian Sardina 2015\n\n");
+ 	            printf("Connect 4 game player - Revision Sebastian Sardina (April 2016)\n\n");
  	            printf("Usage: %s [agent1 agent2] [options]\n", argv[0]);
  	            printf("\tagent1 and agent2 are the names of the agents you wish to play.\n");
  	            printf("\toptions are:\n");
